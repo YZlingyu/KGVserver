@@ -1,37 +1,21 @@
 server:
-  port: 8088
+  port: 8080
   tomcat:
     uri-encoding: utf8
 logging:
   level:
-    com.winter.mapper: DEBUG
+    support.yz.data: DEBUG
 spring:
-    datasource:
-        name: KVG
-        url: jdbc:mysql://127.0.0.1:3306/vue-admin?useUnicode=true&characterEncoding=UTF-8
-        username: root
+  datasource:
+     url: jdbc:mysql://localhost:3306/KVG
+     username: root
+     password: mary19931013
+     driver-class-name: com.mysql.jdbc.Driver
+  data:
+     neo4j:
+        uri: http://localhost:7474
+        username: neo4j
         password: mary19931013
-        # 使用druid数据源
-        type: com.alibaba.druid.pool.DruidDataSource
-        driver-class-name: com.mysql.jdbc.Driver
-        filters: stat
-        maxActive: 20
-        initialSize: 1
-        maxWait: 60000
-        minIdle: 1
-        timeBetweenEvictionRunsMillis: 60000
-        minEvictableIdleTimeMillis: 300000
-        validationQuery: select 'x'
-        testWhileIdle: true
-        testOnBorrow: false
-        testOnReturn: false
-        poolPreparedStatements: true
-        maxOpenPreparedStatements: 20
-#    data:
-#        neo4j:
-#          uri: http://localhost:7474
-#          username: neo4j
-#          password: mary19931013
 mybatis:
   mapper-locations: classpath:mapping/*.xml
   type-aliases-package: com.winter.model

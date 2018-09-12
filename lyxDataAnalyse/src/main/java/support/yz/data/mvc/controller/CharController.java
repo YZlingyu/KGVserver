@@ -58,4 +58,6 @@ public class CharController {
             return DataResponse.buildErrorResponse();
         }
     }
+
+    //public DataResponse
 }
