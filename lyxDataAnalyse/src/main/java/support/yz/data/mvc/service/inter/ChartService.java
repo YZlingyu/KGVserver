@@ -3,6 +3,7 @@ package support.yz.data.mvc.service.inter;
 import java.util.List;
 
 import support.yz.data.entity.chart.Chart;
+import support.yz.data.entity.chart.KnowledgeGroup;
 import support.yz.data.entity.node.EnterpriseBaseImport;
 import support.yz.data.entity.node.NewsBaseOriginal;
 
@@ -24,6 +25,13 @@ public interface ChartService {
      * @Date: 13:20 2018/7/24
      */
     public Chart getChartByTitle(String title) throws Exception;
+    
+    /**
+     * @Author: yangzhuo
+     * @Descriptor: 保存节点信息
+     * @Date: 16:41 2018/9/14
+     */
+    public boolean saveKnowledgeGroup(KnowledgeGroup knowledgeGroup) throws Exception;
 
     /**
      * @Author: yangzhuo
