@@ -76,4 +76,9 @@ public class ChartServiceImpl implements ChartService {
 	public boolean saveKnowledgeGroup(KnowledgeGroup knowledgeGroup) throws Exception {
 		return chartMapper.saveKnowledgeGroup(knowledgeGroup);
 	}
+
+	@Override
+	public boolean deleteKnowledgeGroup(String groupId) throws Exception {
+		return chartMapper.deleteKnowledgeGroup(groupId);
+	}
 }
