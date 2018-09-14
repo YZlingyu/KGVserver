@@ -2,6 +2,7 @@ package support.yz.data.mvc.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -62,6 +63,14 @@ public interface ChartMapper {
     @SelectKey(keyProperty = "groupId", resultType = String.class, before = true, 
 	statement = "select replace(uuid(), '-', '') as id from dual")
     Boolean saveKnowledgeGroup(KnowledgeGroup knowledgeGroup);
+    
+    /**
+     * @Author: yangzhuo
+     * @Descriptor: 删除节点信息
+     * @Date: 16:41 2018/9/14
+     */
+    @Delete("delete from knowledgeGroup where groupId = #{groupId}")
+    Boolean deleteKnowledgeGroup(String groupId);
     
     /**
      * @Author: yangzhuo
