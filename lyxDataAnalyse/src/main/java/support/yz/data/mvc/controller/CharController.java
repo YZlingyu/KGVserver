@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import support.yz.data.entity.chart.Chart;
+import support.yz.data.entity.chart.KnowledgeGroup;
 import support.yz.data.entity.response.DataResponse;
 import support.yz.data.mvc.service.inter.ChartService;
 
@@ -58,6 +59,20 @@ public class CharController {
             return DataResponse.buildErrorResponse();
         }
     }
-
-    //public DataResponse
+    
+    /**
+     * @Author: yangzhuo
+     * @Descriptor: 保存节点信息
+     * @Date: 16:41 2018/9/14
+     */
+    @RequestMapping(value = "saveKnowledgeGroup", method = RequestMethod.POST)
+    public DataResponse saveKnowledgeGroup(KnowledgeGroup knowledgeGroup){
+    	try{
+            Boolean result = chartService.saveKnowledgeGroup(knowledgeGroup);
+            return new DataResponse("success","200",result);
+        } catch (Exception e){
+        	logger.error("failed to CharController.saveKnowledgeGroup", e);
+            return DataResponse.buildErrorResponse();
+        }
+    }
 }
