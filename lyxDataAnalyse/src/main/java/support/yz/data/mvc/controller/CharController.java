@@ -75,4 +75,20 @@ public class CharController {
             return DataResponse.buildErrorResponse();
         }
     }
+    
+    /**
+     * @Author: yangzhuo
+     * @Descriptor: 删除节点信息
+     * @Date: 16:41 2018/9/14
+     */
+    @RequestMapping(value = "deleteKnowledgeGroup", method = RequestMethod.GET)
+    public DataResponse deleteKnowledgeGroup(String groupId){
+    	try{
+            Boolean result = chartService.deleteKnowledgeGroup(groupId);
+            return new DataResponse("success","200",result);
+        } catch (Exception e){
+        	logger.error("failed to CharController.deleteKnowledgeGroup", e);
+            return DataResponse.buildErrorResponse();
+        }
+    }
 }
