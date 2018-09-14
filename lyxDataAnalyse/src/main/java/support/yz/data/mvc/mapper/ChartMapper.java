@@ -8,8 +8,10 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.SelectKey;
 
 import support.yz.data.entity.chart.Chart;
+import support.yz.data.entity.chart.KnowledgeGroup;
 import support.yz.data.entity.node.EnterpriseBaseImport;
 import support.yz.data.entity.node.NewsBaseOriginal;
 
@@ -50,6 +52,16 @@ public interface ChartMapper {
 		@Result(property="chartMin",column="CHART_MIN")
 	})
     Chart getChartByTitle(@Param("chartTitle") String chartTitle);
+    
+    /**
+     * @Author: yangzhuo
+     * @Descriptor: 保存节点信息
+     * @Date: 16:41 2018/9/14
+     */
+    @Insert("INSERT INTO knowledgeGroup VALUES(#{groupId},#{groupName},#{groupExplain},#{groupNode})")
+    @SelectKey(keyProperty = "groupId", resultType = String.class, before = true, 
+	statement = "select replace(uuid(), '-', '') as id from dual")
+    Boolean saveKnowledgeGroup(KnowledgeGroup knowledgeGroup);
     
     /**
      * @Author: yangzhuo
