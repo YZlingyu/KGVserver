@@ -35,6 +35,13 @@ public interface ChartService {
 
     /**
      * @Author: yangzhuo
+     * @Descriptor: 删除节点信息
+     * @Date: 16:41 2018/9/14
+     */
+    public boolean deleteKnowledgeGroup(String groupId) throws Exception;
+    
+    /**
+     * @Author: yangzhuo
      * @Descriptor: 从mysql查找所有的已经导入到neo4j的新闻
      * @Date: 15:24 2018/7/25
      */
