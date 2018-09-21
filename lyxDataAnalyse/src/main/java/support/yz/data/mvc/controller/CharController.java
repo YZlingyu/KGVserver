@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import support.yz.data.entity.chart.Chart;
+import support.yz.data.entity.chart.Chart2;
 import support.yz.data.entity.chart.KnowledgeGroup;
 import support.yz.data.entity.response.DataResponse;
 import support.yz.data.mvc.service.inter.ChartService;
@@ -40,6 +41,22 @@ public class CharController {
             return new DataResponse("success","200",result);
         } catch (Exception e){
         	logger.error("failed to CharController.saveChart", e);
+            return DataResponse.buildErrorResponse();
+        }
+    }
+    
+    /**
+     * @Author: yangzhuo
+     * @Descriptor: 保存图表信息
+     * @Date: 11:16 2018/7/24
+     */
+    @RequestMapping(value = "saveChart2", method = RequestMethod.POST)
+    public DataResponse saveChart2(Chart2 chart){
+        try{
+            Boolean result = chartService.saveChart2(chart);
+            return new DataResponse("success","200",result);
+        } catch (Exception e){
+        	logger.error("failed to CharController.saveChart2", e);
             return DataResponse.buildErrorResponse();
         }
     }
@@ -88,6 +105,22 @@ public class CharController {
             return new DataResponse("success","200",result);
         } catch (Exception e){
         	logger.error("failed to CharController.deleteKnowledgeGroup", e);
+            return DataResponse.buildErrorResponse();
+        }
+    }
+    
+    /**
+     * @Author: yangzhuo
+     * @Descriptor: 修改节点信息
+     * @Date: 16:41 2018/9/14
+     */
+    @RequestMapping(value = "updateKnowledgeGroup", method = RequestMethod.POST)
+    public DataResponse updateKnowledgeGroup(KnowledgeGroup knowledgeGroup){
+    	try{
+            Boolean result = chartService.updateKnowledgeGroup(knowledgeGroup);
+            return new DataResponse("success","200",result);
+        } catch (Exception e){
+        	logger.error("failed to CharController.updateKnowledgeGroup", e);
             return DataResponse.buildErrorResponse();
         }
     }
