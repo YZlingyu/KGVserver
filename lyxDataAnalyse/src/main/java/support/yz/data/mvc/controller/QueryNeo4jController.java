@@ -3,6 +3,7 @@ package support.yz.data.mvc.controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -315,6 +316,51 @@ public class QueryNeo4jController {
 			return new DataResponse("success","200",technologyChain);
 		} catch (Exception e) {
 			logger.error("failed to QueryNeo4jController.findComByTechInTChain", e);
+            return DataResponse.buildErrorResponse();
+		}
+	}
+	
+	/**
+	 * @Author: yangzhuo
+     * @Descriptor: 根据技术关键字查询公司和技术
+     * @Date: 15:29 2018/7/25
+	 */
+	@RequestMapping(value = "/findComAndTechInTChainByTechInTChain", method = RequestMethod.GET)
+	public DataResponse findComAndTechInTChainByTechInTChain(@RequestParam(value="technologyName") String technologyName) {
+		try {
+			Set<String> groupAll = new HashSet<String>();
+			Set<String> technologyAll = new HashSet<String>();
+			Map<String,String> map = new HashMap<String,String>();
+			Set<Map<String,Integer>> Relations =  new HashSet<Map<String,Integer>>();
+			Set<String> techs = queryNeo4jService.findTechnologyChildren(technologyName);
+			for(String t : techs) {
+				List<Group> tech = rTechnoCompanyRepository.findByTechnology(t);
+				for(Group group : tech) {
+					groupAll.add(group.getName());
+					List<Technology> list = queryNeo4jService.findTechnologyByCompany(group.getName());
+					for(Technology technology : list){
+						technologyAll.add(technology.getName());
+						map.put(group.getName(), map.get(group.getName()) == null? technology.getName():map.get(group.getName())+","+technology.getName());
+					}
+				}
+			}
+			groupAll.addAll(technologyAll);
+			List<String> listAll = new ArrayList<String>(groupAll);
+			for(String key:map.keySet()){
+				String[] values = map.get(key).toString().split(",");
+				for(int i = 0; i< values.length ; i ++){
+					Map<String, Integer> maps = new HashMap<String, Integer>();
+					maps.put("source",listAll.indexOf(key));
+					maps.put("target",listAll.indexOf(values[i]));
+					Relations.add(maps);
+				}
+			}
+			Map<String, Set> result= new HashMap<String, Set>();
+			result.put("nodes", groupAll);
+			result.put("Relations", Relations);
+			return new DataResponse("success","200",result);
+		} catch (Exception e) {
+			logger.error("failed to QueryNeo4jController.findComAndTechInTChainByTechInTChain", e);
             return DataResponse.buildErrorResponse();
 		}
 	}
