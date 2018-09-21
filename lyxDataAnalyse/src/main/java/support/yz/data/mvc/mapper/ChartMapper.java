@@ -2,9 +2,22 @@ package support.yz.data.mvc.mapper;
 
 import java.util.List;
 
+<<<<<<< HEAD
 import org.apache.ibatis.annotations.*;
+=======
+import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Result;
+import org.apache.ibatis.annotations.Results;
+import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.SelectKey;
+import org.apache.ibatis.annotations.Update;
+>>>>>>> e969ab6fa14a93bd9e2295a9ea47b520fad4c744
 
 import support.yz.data.entity.chart.Chart;
+import support.yz.data.entity.chart.Chart2;
 import support.yz.data.entity.chart.KnowledgeGroup;
 import support.yz.data.entity.node.EnterpriseBaseImport;
 import support.yz.data.entity.node.NewsBaseOriginal;
@@ -24,6 +37,16 @@ public interface ChartMapper {
      */
     @Insert("INSERT INTO chart VALUES(#{chartId},#{chartTitle},#{chartX},#{chartY},#{chartColor},#{chartType},#{chartXTitle},#{chartXUnit},#{chartYTitle},#{chartYUnit},#{chartMax},#{chartMin})")
     Boolean saveChart(Chart chart);
+    
+    /**
+     * @Author: yangzhuo
+     * @Descriptor: 图表保存
+     * @Date: 12:40 2018/7/23
+     */
+    @Insert("INSERT INTO chart2 VALUES(#{type},#{chartX},#{chartY}")
+    @SelectKey(keyProperty = "id", resultType = String.class, before = true, 
+	statement = "select replace(uuid(), '-', '') as id from dual")
+    Boolean saveChart2(Chart2 chart);
     
     /**
      * @Author: yangzhuo
@@ -69,6 +92,14 @@ public interface ChartMapper {
      * @Author: yangzhuo
      * @Descriptor: 修改节点信息
      * @Date: 21:44 2018/9/14
+     */
+    @Update("update knowledgeGroup set groupName=#{groupName},groupExplain=#{groupExplain},groupNode=#{groupNode} where groupId=#{groupId}")
+    Boolean updateKnowledgeGroup(KnowledgeGroup knowledgeGroup);
+    
+    /**
+     * @Author: yangzhuo
+     * @Descriptor: 修改节点信息
+     * @Date: 16:41 2018/9/14
      */
     @Update("update knowledgeGroup set groupName=#{groupName},groupExplain=#{groupExplain},groupNode=#{groupNode} where groupId=#{groupId}")
     Boolean updateKnowledgeGroup(KnowledgeGroup knowledgeGroup);
