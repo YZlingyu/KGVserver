@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import support.yz.data.entity.chart.Chart;
+import support.yz.data.entity.chart.Chart2;
 import support.yz.data.entity.chart.KnowledgeGroup;
 import support.yz.data.entity.node.EnterpriseBaseImport;
 import support.yz.data.entity.node.NewsBaseOriginal;
@@ -80,5 +81,16 @@ public class ChartServiceImpl implements ChartService {
 	@Override
 	public boolean deleteKnowledgeGroup(String groupId) throws Exception {
 		return chartMapper.deleteKnowledgeGroup(groupId);
+	}
+
+	@Override
+	public boolean updateKnowledgeGroup(KnowledgeGroup knowledgeGroup) throws Exception {
+		return chartMapper.updateKnowledgeGroup(knowledgeGroup);
+	}
+
+	@Override
+	public boolean saveChart2(Chart2 chart) throws Exception {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }
