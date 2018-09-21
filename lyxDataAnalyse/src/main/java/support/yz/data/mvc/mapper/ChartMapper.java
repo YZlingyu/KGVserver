@@ -2,14 +2,7 @@ package support.yz.data.mvc.mapper;
 
 import java.util.List;
 
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Result;
-import org.apache.ibatis.annotations.Results;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.SelectKey;
+import org.apache.ibatis.annotations.*;
 
 import support.yz.data.entity.chart.Chart;
 import support.yz.data.entity.chart.KnowledgeGroup;
@@ -71,6 +64,14 @@ public interface ChartMapper {
      */
     @Delete("delete from knowledgeGroup where groupId = #{groupId}")
     Boolean deleteKnowledgeGroup(String groupId);
+
+    /**
+     * @Author: yangzhuo
+     * @Descriptor: 修改节点信息
+     * @Date: 21:44 2018/9/14
+     */
+    @Update("update knowledgeGroup set groupName=#{groupName},groupExplain=#{groupExplain},groupNode=#{groupNode} where groupId=#{groupId}")
+    Boolean updateKnowledgeGroup(KnowledgeGroup knowledgeGroup);
     
     /**
      * @Author: yangzhuo

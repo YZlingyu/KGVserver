@@ -39,6 +39,13 @@ public interface ChartService {
      * @Date: 16:41 2018/9/14
      */
     public boolean deleteKnowledgeGroup(String groupId) throws Exception;
+
+    /**
+     * @Author: yangzhuo
+     * @Descriptor: 修改节点信息
+     * @Date: 21:44 2018/9/14
+     */
+    public boolean updateKnowledgeGroup(KnowledgeGroup knowledgeGroup) throws Exception;
     
     /**
      * @Author: yangzhuo

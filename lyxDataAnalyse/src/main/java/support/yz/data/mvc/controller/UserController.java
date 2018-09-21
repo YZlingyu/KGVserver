@@ -9,7 +9,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import support.yz.data.entity.response.DataResponse;
+import support.yz.data.entity.user.User;
 import support.yz.data.mvc.service.inter.UserService;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 /**
  * @Author: yangzhuo
@@ -32,10 +36,18 @@ public class UserController {
      * @Date: 15:26 2018/9/14
      */
 	@RequestMapping(value = "getUser", method = RequestMethod.GET)
-	public DataResponse getUser(String userName, String password){
+	public DataResponse getUser(String userName, String password,HttpServletRequest request){
 		try{
             Boolean result = userService.getUser(userName, password);
-            return new DataResponse("success","200",result);
+            if(result) {
+				HttpSession session = request.getSession();
+				User user = new User();
+				user.setUserName(userName);
+				user.setPassword(password);
+				session.setAttribute("user", user);
+				return new DataResponse("success","200",session.getId());
+			}
+            return DataResponse.buildErrorResponse();
         } catch (Exception e){
         	logger.error("failed to UserController.saveChart", e);
             return DataResponse.buildErrorResponse();

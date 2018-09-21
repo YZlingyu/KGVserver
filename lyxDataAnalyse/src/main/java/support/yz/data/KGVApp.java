@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.context.ApplicationContext;
 
 /**
@@ -13,6 +14,7 @@ import org.springframework.context.ApplicationContext;
  * @Date: 2018/7/17
  */
 @SpringBootApplication
+@ServletComponentScan
 public class KGVApp {
 	public static void main(String[] args){
 		ApplicationContext ctx = SpringApplication.run(KGVApp.class, args);

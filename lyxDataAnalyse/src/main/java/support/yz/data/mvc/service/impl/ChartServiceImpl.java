@@ -81,4 +81,9 @@ public class ChartServiceImpl implements ChartService {
 	public boolean deleteKnowledgeGroup(String groupId) throws Exception {
 		return chartMapper.deleteKnowledgeGroup(groupId);
 	}
+
+	@Override
+	public boolean updateKnowledgeGroup(KnowledgeGroup knowledgeGroup) throws Exception {
+		return chartMapper.updateKnowledgeGroup(knowledgeGroup);
+	}
 }

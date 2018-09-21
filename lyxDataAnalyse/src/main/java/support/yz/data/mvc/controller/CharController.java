@@ -91,4 +91,20 @@ public class CharController {
             return DataResponse.buildErrorResponse();
         }
     }
+
+    /**
+     * @Author: yangzhuo
+     * @Descriptor: 修改节点信息
+     * @Date: 21:44 2018/9/14
+     */
+    @RequestMapping(value = "updateKnowledgeGroup", method = RequestMethod.POST)
+    public DataResponse updateKnowledgeGroup(KnowledgeGroup knowledgeGroup){
+        try{
+            Boolean result = chartService.updateKnowledgeGroup(knowledgeGroup);
+            return new DataResponse("success","200",result);
+        } catch (Exception e){
+            logger.error("failed to CharController.updateKnowledgeGroup", e);
+            return DataResponse.buildErrorResponse();
+        }
+    }
 }
