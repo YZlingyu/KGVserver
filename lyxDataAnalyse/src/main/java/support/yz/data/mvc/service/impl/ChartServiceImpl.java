@@ -83,46 +83,32 @@ public class ChartServiceImpl implements ChartService {
 
 	@Override
 	public boolean saveKnowledgeGroup(KnowledgeGroup knowledgeGroup) throws Exception {
-		/*Node node1 = new Node("节点1");
-		Node node2 = new Node("节点2");
-		Node node3 = new Node("节点3");
-		Node node4 = new Node("节点4");
-		List<Node> list1 = new ArrayList<Node>();
-		list1.add(node2);
-		list1.add(node3);
-		List<Node> list2 = new ArrayList<Node>();
-		list2.add(node4);
-		node1.setNextNodes(list1);
-		node2.setNextNodes(list2);
-		nodeRepository.save(node1);*/
-		JSONObject node1Object = JSONObject.parseObject(knowledgeGroup.getGroupNode());
-		JSONArray node1Array = node1Object.getJSONArray("node1");
+		JSONArray node1Array = JSONObject.parseArray(knowledgeGroup.getGroupNode());
 		for(int i=0;i<node1Array.size();i++){
 			List<Node> list1 = new ArrayList<Node>();
-			List<Node> list2 = new ArrayList<Node>();
-			JSONObject node2Object = node1Array.getJSONObject(i);
-			JSONArray node2Array = node2Object.getJSONArray("node2");
-			String node1Name = (String)node1Object.get("value");
-			Node node = new Node(node1Name);
+			JSONObject node1Object = node1Array.getJSONObject(i);
+			String name1 = (String)node1Object.get("value");
+			Node node1 = new Node(name1);
+			JSONArray node2Array = node1Object.getJSONArray("node1");
 			for(int j=0;j<node2Array.size();j++){
-				String node2Name = (String)node2Object.get("value");
-				Node node2 = new Node(node2Name);
-				JSONObject node3Object = node2Array.getJSONObject(j);
-				JSONArray node3Array = node3Object.getJSONArray("node3");
-				String node3Name = (String) node3Object.get("value");
-//				for(int z=0;z<node3Array.size();z++){
-//					Node node3 = new Node(node3Name);
-//					list2.add(node3);
-//				}
-//				node2.setNextNodes(list2);
-//				list1.add(node2);
+				List<Node> list2 = new ArrayList<Node>();
+				JSONObject node2Object = node2Array.getJSONObject(j);
+				String name2 = (String)node2Object.get("value");
+				Node node2 = new Node(name2);
+				JSONArray node3Array = node2Object.getJSONArray("node2");
+				for(int z=0;z<node3Array.size();z++){
+					JSONObject node3Object = node3Array.getJSONObject(z);
+					String name3 = (String)node3Object.get("value");
+					Node node3 = new Node(name3);
+					list2.add(node3);
+				}
+				node2.setNextNodes(list2);
+				list1.add(node2);
 			}
-			node.setNextNodes(list1);
-			nodeRepository.save(node);
+			node1.setNextNodes(list1);
+			nodeRepository.save(node1);
 		}
-		System.out.print(knowledgeGroup.getGroupNode());
-//		return chartMapper.saveKnowledgeGroup(knowledgeGroup);
-		return false;
+		return true;
 	}
 
 	@Override
