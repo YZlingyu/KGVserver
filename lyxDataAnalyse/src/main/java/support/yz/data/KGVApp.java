@@ -9,7 +9,7 @@ import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.context.ApplicationContext;
 
 /**
- * @Author yangzhou
+ * @Author yangzhuo
  * @Description: 数据分析系统后台启动类
  * @Date: 2018/7/17
  */

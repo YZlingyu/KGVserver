@@ -1,7 +1,10 @@
 package support.yz.data.mvc.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -9,9 +12,11 @@ import org.springframework.transaction.annotation.Transactional;
 import support.yz.data.entity.chart.Chart;
 import support.yz.data.entity.chart.Chart2;
 import support.yz.data.entity.chart.KnowledgeGroup;
+import support.yz.data.entity.chart.Node;
 import support.yz.data.entity.node.EnterpriseBaseImport;
 import support.yz.data.entity.node.NewsBaseOriginal;
 import support.yz.data.mvc.mapper.ChartMapper;
+import support.yz.data.mvc.mapper.NodeRepository;
 import support.yz.data.mvc.service.inter.ChartService;
 
 /**
@@ -22,6 +27,9 @@ public class ChartServiceImpl implements ChartService {
 	
 	@Autowired
     private ChartMapper chartMapper;
+
+	@Autowired
+	private NodeRepository nodeRepository;
 
 	/**
      * @Author: yangzhuo
@@ -75,7 +83,46 @@ public class ChartServiceImpl implements ChartService {
 
 	@Override
 	public boolean saveKnowledgeGroup(KnowledgeGroup knowledgeGroup) throws Exception {
-		return chartMapper.saveKnowledgeGroup(knowledgeGroup);
+		/*Node node1 = new Node("节点1");
+		Node node2 = new Node("节点2");
+		Node node3 = new Node("节点3");
+		Node node4 = new Node("节点4");
+		List<Node> list1 = new ArrayList<Node>();
+		list1.add(node2);
+		list1.add(node3);
+		List<Node> list2 = new ArrayList<Node>();
+		list2.add(node4);
+		node1.setNextNodes(list1);
+		node2.setNextNodes(list2);
+		nodeRepository.save(node1);*/
+		JSONObject node1Object = JSONObject.parseObject(knowledgeGroup.getGroupNode());
+		JSONArray node1Array = node1Object.getJSONArray("node1");
+		for(int i=0;i<node1Array.size();i++){
+			List<Node> list1 = new ArrayList<Node>();
+			List<Node> list2 = new ArrayList<Node>();
+			JSONObject node2Object = node1Array.getJSONObject(i);
+			JSONArray node2Array = node2Object.getJSONArray("node2");
+			String node1Name = (String)node1Object.get("value");
+			Node node = new Node(node1Name);
+			for(int j=0;j<node2Array.size();j++){
+				String node2Name = (String)node2Object.get("value");
+				Node node2 = new Node(node2Name);
+				JSONObject node3Object = node2Array.getJSONObject(j);
+				JSONArray node3Array = node3Object.getJSONArray("node3");
+				String node3Name = (String) node3Object.get("value");
+//				for(int z=0;z<node3Array.size();z++){
+//					Node node3 = new Node(node3Name);
+//					list2.add(node3);
+//				}
+//				node2.setNextNodes(list2);
+//				list1.add(node2);
+			}
+			node.setNextNodes(list1);
+			nodeRepository.save(node);
+		}
+		System.out.print(knowledgeGroup.getGroupNode());
+//		return chartMapper.saveKnowledgeGroup(knowledgeGroup);
+		return false;
 	}
 
 	@Override
@@ -87,13 +134,9 @@ public class ChartServiceImpl implements ChartService {
 	public boolean updateKnowledgeGroup(KnowledgeGroup knowledgeGroup) throws Exception {
 		return chartMapper.updateKnowledgeGroup(knowledgeGroup);
 	}
-<<<<<<< HEAD
-=======
 
 	@Override
 	public boolean saveChart2(Chart2 chart) throws Exception {
-		// TODO Auto-generated method stub
-		return false;
+		return chartMapper.saveChart2(chart);
 	}
->>>>>>> e969ab6fa14a93bd9e2295a9ea47b520fad4c744
 }

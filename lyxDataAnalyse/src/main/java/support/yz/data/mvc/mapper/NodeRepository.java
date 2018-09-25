@@ -1,0 +1,11 @@
+package support.yz.data.mvc.mapper;
+
+import org.springframework.data.neo4j.repository.GraphRepository;
+import org.springframework.stereotype.Repository;
+import support.yz.data.entity.chart.Node;
+
+@Repository
+public interface NodeRepository extends GraphRepository<Node> {
+
+
+}
