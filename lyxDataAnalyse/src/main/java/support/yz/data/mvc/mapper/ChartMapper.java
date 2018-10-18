@@ -12,9 +12,8 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.SelectKey;
 import org.apache.ibatis.annotations.Update;
 
-import support.yz.data.entity.chart.Chart;
-import support.yz.data.entity.chart.Chart2;
-import support.yz.data.entity.chart.KnowledgeGroup;
+import org.springframework.stereotype.Service;
+import support.yz.data.entity.chart.*;
 import support.yz.data.entity.node.EnterpriseBaseImport;
 import support.yz.data.entity.node.NewsBaseOriginal;
 
@@ -90,6 +89,18 @@ public interface ChartMapper {
 		@Result(property="chartMin",column="CHART_MIN")
 	})
     Chart getChartByTitle(@Param("chartTitle") String chartTitle);
+
+    @Select("SELECT * FROM technology LIMIT 10")
+    @Results({
+        @Result(id=true,property="id",column="id"),
+        @Result(property="name",column="name")
+    })
+    List<Technology2> getTechnologyList();
+
+    @Insert("INSERT INTO WorkChart(technologyId,id,name,abscissa,ordinate) VALUES(#{technologyId},#{id},#{workChart.name},#{workChart.abscissa},#{workChart.ordinate})")
+    @SelectKey(keyProperty = "id", resultType = String.class, before = true,
+            statement = "select replace(uuid(), '-', '') as id from dual")
+    Boolean saveWorkChart(@Param("technologyId") String technologyId,@Param("workChart")WorkChart workChart);
     
     /**
      * @Author: yangzhuo

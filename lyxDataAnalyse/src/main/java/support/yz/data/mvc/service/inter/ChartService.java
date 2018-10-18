@@ -1,10 +1,9 @@
 package support.yz.data.mvc.service.inter;
 
 import java.util.List;
+import java.util.Map;
 
-import support.yz.data.entity.chart.Chart;
-import support.yz.data.entity.chart.Chart2;
-import support.yz.data.entity.chart.KnowledgeGroup;
+import support.yz.data.entity.chart.*;
 import support.yz.data.entity.node.EnterpriseBaseImport;
 import support.yz.data.entity.node.NewsBaseOriginal;
 
@@ -33,7 +32,17 @@ public interface ChartService {
      * @Date: 13:20 2018/7/24
      */
     public Chart getChartByTitle(String title) throws Exception;
-    
+
+    /**
+     * 查询工作表
+     */
+    public List<Technology2> getTechnologyList() throws Exception;
+
+    /**
+     * 保存工作表
+     */
+    public boolean saveWorkChart(String technologyId,WorkChart workChart) throws Exception;
+
     /**
      * @Author: yangzhuo
      * @Descriptor: 保存节点信息
@@ -70,4 +79,6 @@ public interface ChartService {
 	List<EnterpriseBaseImport> findImport() throws Exception;
 
 	NewsBaseOriginal findByNewsId(String news_id) throws Exception;
+
+	public Map<Long,String> getAllTechnologyNames() throws Exception;
 }

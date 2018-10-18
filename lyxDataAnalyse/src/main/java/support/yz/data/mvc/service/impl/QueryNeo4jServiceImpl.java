@@ -1,11 +1,6 @@
 package support.yz.data.mvc.service.impl;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
-import java.util.Set;
+import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,11 +9,8 @@ import support.yz.data.entity.neo4j.Technology;
 import support.yz.data.entity.node.Group;
 import support.yz.data.entity.node.News;
 import support.yz.data.entity.node.TechnologyChain;
-import support.yz.data.mvc.mapper.RCompanyTechnoRepository;
-import support.yz.data.mvc.mapper.RGroupGroupRepository;
-import support.yz.data.mvc.mapper.RGroupNewsRepository;
-import support.yz.data.mvc.mapper.RTechnoCompanyRepository;
-import support.yz.data.mvc.mapper.RTechnologyTechnologyRepository;
+import support.yz.data.entity.node.TechnologyChain2;
+import support.yz.data.mvc.mapper.*;
 import support.yz.data.mvc.service.inter.QueryNeo4jService;
 
 @Service
@@ -43,6 +35,9 @@ public class QueryNeo4jServiceImpl implements QueryNeo4jService {
 	//企业、企业关系
 	@Autowired
 	RGroupGroupRepository rGroupGroupRepository;
+
+	@Autowired
+	NodeRepository nodeRepository;
 
 	@Override
 	public List<Technology> findTechnologyChildrens(String technology) throws Exception {
@@ -228,6 +223,16 @@ public class QueryNeo4jServiceImpl implements QueryNeo4jService {
 			}
 		}
 		return result;
+	}
+
+	@Override
+	public Map<Long,String> findTechnologyChildren2(Long id,String name) throws Exception {
+		Map<Long,String> result2 = new HashMap<Long,String>();
+		List<Technology> childrens= rTechnologyTechnologyRepository.findChildrens2(id);
+		for (Technology t : childrens) {
+			result2.put(t.getId(),t.getName());
+		}
+		return result2;
 	}
 
 }

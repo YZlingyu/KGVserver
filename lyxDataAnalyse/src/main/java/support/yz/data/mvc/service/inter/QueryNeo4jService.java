@@ -1,6 +1,7 @@
 package support.yz.data.mvc.service.inter;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import support.yz.data.entity.neo4j.Technology;
@@ -78,4 +79,6 @@ public interface QueryNeo4jService {
 	Set<News> findNewsByTechnology(String s) throws Exception;
 
 	TechnologyChain findComByTechInTChain(String technologyName) throws Exception;
+
+	Map<Long,String> findTechnologyChildren2(Long id, String name) throws Exception;
 }
