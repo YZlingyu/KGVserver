@@ -18,20 +18,13 @@ public interface ChartService {
      * @Date: 11:16 2018/7/24
      */
     public boolean saveChart(Chart chart) throws Exception;
-    
-    /**
-     * @Author: yangzhuo
-     * @Descriptor: 保存图表信息
-     * @Date: 11:16 2018/7/24
-     */
-    public boolean saveChart2(Chart2 chart) throws Exception;
-    
+
     /**
      * @Author: yangzhuo
      * @Descriptor: 获取图表信息
      * @Date: 13:20 2018/7/24
      */
-    public Chart getChartByTitle(String title) throws Exception;
+    public Chart getChartById(String chartId) throws Exception;
 
     /**
      * 查询工作表
@@ -81,4 +74,10 @@ public interface ChartService {
 	NewsBaseOriginal findByNewsId(String news_id) throws Exception;
 
 	public Map<Long,String> getAllTechnologyNames() throws Exception;
+
+	List<String> getChartByTech(String tech) throws Exception;
+
+    Boolean saveReport(String reportName, String layouts,String tech) throws Exception;
+
+    List<Report> getAllReport() throws Exception;
 }

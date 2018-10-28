@@ -2,6 +2,7 @@ package support.yz.data.mvc.mapper;
 
 import java.util.List;
 
+import com.sun.org.apache.regexp.internal.RE;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
@@ -30,65 +31,25 @@ public interface ChartMapper {
      * @Descriptor: 图表保存
      * @Date: 12:40 2018/7/23
      */
-    @Insert("INSERT INTO chart VALUES(#{chartId},#{chartTitle},#{chartX},#{chartY},#{chartColor},#{chartType},#{chartXTitle},#{chartXUnit},#{chartYTitle},#{chartYUnit},#{chartMax},#{chartMin})")
+    @Insert("INSERT INTO chart (chart_id,chart_info,layout,tech) VALUES(#{chartId},#{chartInfo},#{layout},#{tech})")
+    @SelectKey(keyProperty = "chart_id", resultType = String.class, before = true,
+            statement = "select replace(uuid(), '-', '') as id from dual")
     Boolean saveChart(Chart chart);
-    
-    /**
-     * @Author: yangzhuo
-     * @Descriptor: 图表保存
-     * @Date: 12:40 2018/7/23
-     */
-    @Insert("INSERT INTO chart2 " +
-            "(" +
-            "id," +
-            "type," +
-            "chartX," +
-            "title," +
-            "chartType," +
-            "axisTitle," +
-            "axisUnit," +
-            "axisMax," +
-            "axisMin," +
-            "axisRemark," +
-            "chartY" +
-            ") " +
-            "VALUES(" +
-            "#{id}," +
-            "#{type}," +
-            "#{chartX}," +
-            "#{title}," +
-            "#{chartType}," +
-            "#{axisTitle}," +
-            "#{axisUnit}," +
-            "#{axisMax}," +
-            "#{axisMin}," +
-            "#{axisRemark}," +
-            "#{chartY})")
-    @SelectKey(keyProperty = "id", resultType = String.class, before = true,
-	statement = "select replace(uuid(), '-', '') as id from dual")
-    Boolean saveChart2(Chart2 chart);
+
     
     /**
      * @Author: yangzhuo
      * @Descriptor: 获取图表
      * @Date: 12:40 2018/7/24
      */
-    @Select("SELECT * FROM chart WHERE CHART_TITLE = #{chartTitle}")
+    @Select("SELECT * FROM chart WHERE chart_id = #{chartId}")
     @Results({
-		@Result(id=true,property="chartId",column="CHART_ID"),
-		@Result(property="chartTitle",column="CHART_TITLE"),
-		@Result(property="chartX",column="CHART_X"),
-		@Result(property="chartY",column="CHART_Y"),
-		@Result(property="chartColor",column="CHART_COLOR"),
-		@Result(property="chartType",column="CHART_TYPE"),
-		@Result(property="chartXTitle",column="CHART_X_TITLE"),
-		@Result(property="chartXUnit",column="CHART_X_UNIT"),
-		@Result(property="chartYTitle",column="CHART_Y_TITLE"),
-		@Result(property="chartYUnit",column="CHART_Y_UNIT"),
-		@Result(property="chartMax",column="CHART_MAX"),
-		@Result(property="chartMin",column="CHART_MIN")
+		@Result(id=true,property="chartId",column="chart_id"),
+		@Result(property="chartInfo",column="chart_info"),
+		@Result(property="layout",column="layout"),
+		@Result(property="tech",column="tech")
 	})
-    Chart getChartByTitle(@Param("chartTitle") String chartTitle);
+    Chart getChartById(@Param("chartId") String chartId);
 
     @Select("SELECT * FROM technology LIMIT 10")
     @Results({
@@ -146,4 +107,16 @@ public interface ChartMapper {
     
     @Select("SELECT news_id,ner_names,time,title,abstract,keywords FROM NEWS_BASE_ORIGINAL WHERE news_id = ?")
     NewsBaseOriginal findByNewsId(String news_id);
+
+    @Select("SELECT layout FROM chart WHERE tech = #{tech}")
+    List<String> getChartByTech(String tech);
+
+    @Insert("INSERT INTO report (tech,reportName,layouts,createTime) " +
+            "VALUES(#{tech},#{reportName},#{layouts}),NOW()")
+    @SelectKey(keyProperty = "reportId", resultType = String.class, before = true,
+            statement = "select replace(uuid(), '-', '') as id from dual")
+    Boolean saveReport(String reportName, String layouts,String tech);
+
+    @Select("SELECT * FROM report")
+    List<Report> getAllReport();
 }

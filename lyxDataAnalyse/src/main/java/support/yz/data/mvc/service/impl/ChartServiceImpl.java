@@ -54,8 +54,8 @@ public class ChartServiceImpl implements ChartService {
      */
 	@Transactional
 	@Override
-	public Chart getChartByTitle(String title) throws Exception {
-		return chartMapper.getChartByTitle(title);
+	public Chart getChartById(String chartId) throws Exception {
+		return chartMapper.getChartById(chartId);
 	}
 
 	/**
@@ -146,11 +146,6 @@ public class ChartServiceImpl implements ChartService {
 	}
 
 	@Override
-	public boolean saveChart2(Chart2 chart) throws Exception {
-		return chartMapper.saveChart2(chart);
-	}
-
-	@Override
 	public Map<Long,String> getAllTechnologyNames() throws Exception{
 		Map<Long,String> names = new HashMap<Long, String>();
 		Iterable<Technology> nodeList = nodeRepository.findAll();
@@ -166,5 +161,20 @@ public class ChartServiceImpl implements ChartService {
 //				names.put(technology.getId(),technology.getName());
 //		}
 		return names;
+	}
+
+	@Override
+	public List<String> getChartByTech(String tech) throws Exception {
+		return chartMapper.getChartByTech(tech);
+	}
+
+	@Override
+	public Boolean saveReport(String reportName, String layouts,String tech) throws Exception{
+		return chartMapper.saveReport(reportName,layouts,tech);
+	}
+
+	@Override
+	public List<Report> getAllReport() throws Exception{
+		return chartMapper.getAllReport();
 	}
 }

@@ -1,6 +1,7 @@
 package support.yz.data.mvc.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.sun.org.apache.regexp.internal.RE;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,30 +59,57 @@ public class CharController {
     }
 
     /**
-     * @Author: yangzhuo
-     * @Descriptor: 保存图表信息
-     * @Date: 11:16 2018/7/24
+     * 根据产业链查询图表
      */
-    @RequestMapping(value = "saveChart2", method = RequestMethod.POST)
-    public DataResponse saveChart2(Chart2 chart) {
+    @RequestMapping(value = "getChartByTech/{tech}", method = RequestMethod.GET)
+    public DataResponse getChartByTech(@PathVariable("tech") String tech){
         try {
-            Boolean result = chartService.saveChart2(chart);
-            return new DataResponse("success", "200", result);
+            List<String> layouts = chartService.getChartByTech(tech);
+            return new DataResponse("success", "200", layouts);
         } catch (Exception e) {
-            logger.error("failed to CharController.saveChart2", e);
+            logger.error("failed to CharController.getChartByTech", e);
             return DataResponse.buildErrorResponse();
         }
     }
+
+    /**
+     * 保存报告
+     */
+    @RequestMapping(value = "saveReport", method = RequestMethod.POST)
+    public DataResponse saveReport(Report report){
+        try {
+            Boolean result = chartService.saveReport(report.getReportName(),report.getLayouts(),report.getTech());
+            return new DataResponse("success", "200", result);
+        } catch (Exception e) {
+            logger.error("failed to CharController.getChartByTech", e);
+            return DataResponse.buildErrorResponse();
+        }
+    }
+
+    /**
+     * 获取所有报告
+     */
+    @RequestMapping(value = "getAllReport",method = RequestMethod.GET)
+    public DataResponse getAllReport(){
+        try {
+            List<Report> list = chartService.getAllReport();
+            return new DataResponse("success", "200", list);
+        } catch (Exception e) {
+            logger.error("failed to CharController.getChartByTech", e);
+            return DataResponse.buildErrorResponse();
+        }
+    }
+
 
     /**
      * @Author: yangzhuo
      * @Descriptor: 获取图表信息
      * @Date: 13:20 2018/7/24
      */
-    @RequestMapping(value = "getChart", method = RequestMethod.GET)
-    public DataResponse getChartByTitle(String title) {
+    @RequestMapping(value = "getChart/{chartId}", method = RequestMethod.GET)
+    public DataResponse getChartById(@PathVariable("chartId") String chartId) {
         try {
-            Chart chart = chartService.getChartByTitle(title);
+            Chart chart = chartService.getChartById(chartId);
             return new DataResponse("success", "200", chart);
         } catch (Exception e) {
             logger.error("failed to CharController.getChartByTitle", e);

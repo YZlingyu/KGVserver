@@ -6,16 +6,8 @@ import lombok.Setter;
 @Setter
 @Getter
 public class Chart {
-    private String chartId;
-    private String chartTitle;
-    private String chartX;
-    private int chartY;
-    private String chartColor;
-    private String chartType;
-    private String chartXTitle;
-    private String chartXUnit;
-    private String chartYTitle;
-    private String chartYUnit;
-    private int chartMax;
-    private int chartMin;
+    private String chartId;// 图表唯一主键
+    private String chartInfo;// 图表信息
+    private String layout;// 图表样式
+    private String tech; // 产业链
 }
