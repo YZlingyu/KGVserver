@@ -1,5 +1,6 @@
 package support.yz.data.mvc.service.inter;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -75,9 +76,11 @@ public interface ChartService {
 
 	public Map<Long,String> getAllTechnologyNames() throws Exception;
 
-	List<String> getChartByTech(String tech) throws Exception;
+	List<Chart> getChartByTech(String tech) throws Exception;
 
-    Boolean saveReport(String reportName, String layouts,String tech) throws Exception;
+    Boolean saveReport(Report report) throws Exception;
 
     List<Report> getAllReport() throws Exception;
+
+    List<Report> getReportByTechnology(String tech) throws Exception;
 }

@@ -10,8 +10,8 @@ import java.sql.Date;
 public class EnterpriseInfo {
     private int id;
     private String companyName;
-    private int investmentId;
-    private int financingId;
+    private String investmentId;
+    private String financingId;
     private String companyDomain;
     private Date companyCreateDate;
     private String companyIntroduction;

@@ -53,10 +53,30 @@ public class CompanyController {
         }
     }
 
+    @RequestMapping(value = "getCompanyInfoByName/{companyName}",method = RequestMethod.GET)
+    public DataResponse getCompanyInfoByName(@PathVariable("companyName") String companyName){
+        try{
+            EnterpriseInfo list = companyService.getCompanyInfoByName(companyName);
+            return new DataResponse("success", "200", list);
+        } catch (Exception e) {
+            logger.error("failed to CompanyController.getCompanyInfoByName", e);
+            return DataResponse.buildErrorResponse();
+        }
+    }
 
     /**
      * @Desciptor 查公司新闻
      */
+    @RequestMapping(value = "getCompanyNewsByName/{companyName}",method = RequestMethod.GET)
+    public DataResponse getCompanyNewsByName(@PathVariable("companyName") String companyName){
+        try{
+            List<EnterpriseNews> list = companyService.getCompanyNewsByName(companyName);
+            return new DataResponse("success", "200", list);
+        } catch (Exception e) {
+            logger.error("failed to CompanyController.getCompanyNewsByName", e);
+            return DataResponse.buildErrorResponse();
+        }
+    }
     @RequestMapping(value = "getCompanyNewsById/{companyId}",method = RequestMethod.GET)
     public DataResponse getCompanyNewsById(@PathVariable("companyId") String companyId){
         try{

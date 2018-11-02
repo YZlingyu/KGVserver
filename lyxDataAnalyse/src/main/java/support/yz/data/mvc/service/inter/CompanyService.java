@@ -15,4 +15,8 @@ public interface CompanyService {
     public List<EnterpriseNews> getCompanyNewsById(String companyId) throws Exception;
 
     public List<EnterprisePatent> getCompanyPatentById(String companyId) throws Exception;
+
+    EnterpriseInfo getCompanyInfoByName(String companyName) throws Exception;
+
+    List<EnterpriseNews> getCompanyNewsByName(String companyName) throws Exception;
 }

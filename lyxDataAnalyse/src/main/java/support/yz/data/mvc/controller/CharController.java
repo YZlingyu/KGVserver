@@ -64,8 +64,8 @@ public class CharController {
     @RequestMapping(value = "getChartByTech/{tech}", method = RequestMethod.GET)
     public DataResponse getChartByTech(@PathVariable("tech") String tech){
         try {
-            List<String> layouts = chartService.getChartByTech(tech);
-            return new DataResponse("success", "200", layouts);
+            List<Chart> list = chartService.getChartByTech(tech);
+            return new DataResponse("success", "200", list);
         } catch (Exception e) {
             logger.error("failed to CharController.getChartByTech", e);
             return DataResponse.buildErrorResponse();
@@ -78,10 +78,10 @@ public class CharController {
     @RequestMapping(value = "saveReport", method = RequestMethod.POST)
     public DataResponse saveReport(Report report){
         try {
-            Boolean result = chartService.saveReport(report.getReportName(),report.getLayouts(),report.getTech());
-            return new DataResponse("success", "200", result);
+            Boolean result = chartService.saveReport(report);
+            return new DataResponse("success", "200",result);
         } catch (Exception e) {
-            logger.error("failed to CharController.getChartByTech", e);
+            logger.error("failed to CharController.saveReport", e);
             return DataResponse.buildErrorResponse();
         }
     }
@@ -95,7 +95,21 @@ public class CharController {
             List<Report> list = chartService.getAllReport();
             return new DataResponse("success", "200", list);
         } catch (Exception e) {
-            logger.error("failed to CharController.getChartByTech", e);
+            logger.error("failed to CharController.getAllReport", e);
+            return DataResponse.buildErrorResponse();
+        }
+    }
+
+    /**
+     * 通过技术名获取报告
+     */
+    @RequestMapping(value = "getReportByTechnology/{tech}",method = RequestMethod.GET)
+    public DataResponse getReportByTechnology(@PathVariable("tech") String tech){
+        try {
+            List<Report> list = chartService.getReportByTechnology(tech);
+            return new DataResponse("success", "200", list);
+        } catch (Exception e) {
+            logger.error("failed to CharController.getReportByTechnology", e);
             return DataResponse.buildErrorResponse();
         }
     }

@@ -1,5 +1,6 @@
 package support.yz.data.mvc.mapper;
 
+import java.sql.Date;
 import java.util.List;
 
 import com.sun.org.apache.regexp.internal.RE;
@@ -31,8 +32,8 @@ public interface ChartMapper {
      * @Descriptor: 图表保存
      * @Date: 12:40 2018/7/23
      */
-    @Insert("INSERT INTO chart (chart_id,chart_info,layout,tech) VALUES(#{chartId},#{chartInfo},#{layout},#{tech})")
-    @SelectKey(keyProperty = "chart_id", resultType = String.class, before = true,
+    @Insert("INSERT INTO chart (chart_id,chart_info,layout,tech, note) VALUES(#{chartId},#{chartInfo},#{layout},#{tech}, #{note})")
+    @SelectKey(keyProperty = "chartId", resultType = String.class, before = true,
             statement = "select replace(uuid(), '-', '') as id from dual")
     Boolean saveChart(Chart chart);
 
@@ -108,15 +109,42 @@ public interface ChartMapper {
     @Select("SELECT news_id,ner_names,time,title,abstract,keywords FROM NEWS_BASE_ORIGINAL WHERE news_id = ?")
     NewsBaseOriginal findByNewsId(String news_id);
 
-    @Select("SELECT layout FROM chart WHERE tech = #{tech}")
-    List<String> getChartByTech(String tech);
+    @Select("SELECT * FROM chart WHERE tech = #{tech}")
+    @Results({
+            @Result(id=true,property="chartId",column="chart_id"),
+            @Result(property="chartInfo",column="chart_info"),
+            @Result(property="reportName",column="report_name"),
+            @Result(property="layout",column="layout"),
+            @Result(property="tech",column="tech")
+    })
+    List<Chart> getChartByTech(String tech);
 
-    @Insert("INSERT INTO report (tech,reportName,layouts,createTime) " +
-            "VALUES(#{tech},#{reportName},#{layouts}),NOW()")
+    @Insert("INSERT INTO report (report_id,tech,report_name,layouts,chart_name,chart_note,create_time) VALUES(#{reportId},#{tech},#{reportName},#{layouts},#{chartName},#{chartNote},NOW())")
     @SelectKey(keyProperty = "reportId", resultType = String.class, before = true,
             statement = "select replace(uuid(), '-', '') as id from dual")
-    Boolean saveReport(String reportName, String layouts,String tech);
+    Boolean saveReport(Report report);
 
     @Select("SELECT * FROM report")
+    @Results({
+            @Result(id=true,property="reportId",column="report_id"),
+            @Result(property="tech",column="tech"),
+            @Result(property="reportName",column="report_name"),
+            @Result(property="layouts",column="layouts"),
+            @Result(property="chartName",column="chart_name"),
+            @Result(property="chartNote",column="chart_note"),
+            @Result(property="createTime",column="create_time")
+    })
     List<Report> getAllReport();
+
+    @Select("SELECT * FROM report WHERE tech = #{tech}")
+    @Results({
+            @Result(id=true,property="reportId",column="report_id"),
+            @Result(property="tech",column="tech"),
+            @Result(property="reportName",column="report_name"),
+            @Result(property="layouts",column="layouts"),
+            @Result(property="chartName",column="chart_name"),
+            @Result(property="chartNote",column="chart_note"),
+            @Result(property="createTime",column="create_time")
+    })
+    List<Report> getReportByTechnology(String tech);
 }

@@ -164,17 +164,22 @@ public class ChartServiceImpl implements ChartService {
 	}
 
 	@Override
-	public List<String> getChartByTech(String tech) throws Exception {
+	public List<Chart> getChartByTech(String tech) throws Exception {
 		return chartMapper.getChartByTech(tech);
 	}
 
 	@Override
-	public Boolean saveReport(String reportName, String layouts,String tech) throws Exception{
-		return chartMapper.saveReport(reportName,layouts,tech);
+	public Boolean saveReport(Report report) throws Exception{
+		return chartMapper.saveReport(report);
 	}
 
 	@Override
 	public List<Report> getAllReport() throws Exception{
 		return chartMapper.getAllReport();
+	}
+
+	@Override
+	public List<Report> getReportByTechnology(String tech) throws Exception{
+		return chartMapper.getReportByTechnology(tech);
 	}
 }

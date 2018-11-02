@@ -10,4 +10,5 @@ public class Chart {
     private String chartInfo;// 图表信息
     private String layout;// 图表样式
     private String tech; // 产业链
+    private String note;
 }

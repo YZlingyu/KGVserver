@@ -25,8 +25,16 @@ public class CompanyServiceImpl implements CompanyService {
         return companyMapper.getCompanyInfoById(companyId);
     }
 
+    public EnterpriseInfo getCompanyInfoByName(String companyName) throws Exception {
+        return companyMapper.getCompanyInfoByName(companyName);
+    }
+
     public List<EnterpriseNews> getCompanyNewsById(String companyId) throws Exception {
         return companyMapper.getCompanyNewsById(companyId);
+    }
+
+    public List<EnterpriseNews> getCompanyNewsByName(String companyName) throws Exception {
+        return companyMapper.getCompanyNewsByName(companyName);
     }
 
     public List<EnterprisePatent> getCompanyPatentById(String companyId) throws Exception {

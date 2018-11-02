@@ -69,6 +69,18 @@ public interface CompanyMapper {
     })
     List<EnterpriseNews> getCompanyNewsById(@Param("companyId") String companyId);
 
+    @Select("SELECT * FROM company_news WHERE company_name = #{companyName}")
+    @Results({
+            @Result(id=true,property="id",column="id"),
+            @Result(property="title",column="title"),
+            @Result(property="newsIntroduction",column="news_introduction"),
+            @Result(property="newsDomain",column="news_domain"),
+            @Result(property="companyId",column="company_id"),
+            @Result(property="newsTime",column="news_time"),
+            @Result(property="createTime",column="create_time"),
+            @Result(property="actionTime",column="action_time")
+    })
+    List<EnterpriseNews> getCompanyNewsByName(String companyName);
     /**
      * @Descriptor 查公司专利
      */
@@ -84,4 +96,25 @@ public interface CompanyMapper {
             @Result(property="actionTime",column="action_time")
     })
     List<EnterprisePatent> getCompanyPatentById(@Param("companyId") String companyId);
+
+    /**
+     *
+     * @Descriptor 查公司信息
+     */
+    @Select("SELECT * FROM company_info WHERE company_name = #{companyName}")
+    @Results({
+            @Result(id=true,property="id",column="id"),
+            @Result(property="companyName",column="company_name"),
+            @Result(property="investmentId",column="investment_id"),
+            @Result(property="financingId",column="financing_id"),
+            @Result(property="companyDomain",column="company_domain"),
+            @Result(property="companyCreateDate",column="company_create_date"),
+            @Result(property="companyIntroduction",column="company_introduction"),
+            @Result(property="companyAdd",column="company_add"),
+            @Result(property="createTime",column="create_time"),
+            @Result(property="actionTime",column="action_time")
+    })
+    EnterpriseInfo getCompanyInfoByName(String companyName);
+
+
 }

@@ -10,5 +10,7 @@ public class Report {
     private String tech;
     private String reportName;
     private String layouts;
+    private String chartName;
+    private String chartNote;
     private Date createTime;
 }
