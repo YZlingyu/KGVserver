@@ -1,0 +1,5 @@
+support\lyx\data\Worker.class
+support\lyx\data\QueryService.class
+support\lyx\data\JDBCConnection.class
+support\lyx\data\controller\TestController.class
+support\lyx\data\ReadData.class

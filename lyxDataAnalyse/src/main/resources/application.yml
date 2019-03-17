@@ -21,6 +21,14 @@ mybatis:
   type-aliases-package: com.winter.model
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+redis:
+  ADDR: 127.0.0.1
+  PORT: 6379
+  AUTH: admin
+  MAX_ACTIVE: 1204
+  MAX_IDLE: 200
+  MAX_WAIT: 10000
+  TIMEOUT: 10000
 
 #pagehelper分页插件
 pagehelper:
